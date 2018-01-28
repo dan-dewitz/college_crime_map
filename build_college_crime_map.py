@@ -19,7 +19,7 @@ plotly.tools.set_credentials_file(username='ddewitz',
 
 def main():
     # load cleaned data set
-    crime_df = pd.read_csv('/home/dan/Desktop/portfolio/College_Crime_Map/colleges_lat_long_program.csv')
+    crime_df = pd.read_csv('/home/dan/Desktop/portfolio/College_Crime_Map/College_Crime_Map/data/colleges_lat_long_program.csv')
     crime_list = ['RAPE15', 'FONDL15', 'ROBBE15', 'AGG_A15']
 
     standardized__df = standardize_crime_rates(crime_df, crime_list)

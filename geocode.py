@@ -8,6 +8,8 @@ import geocoder
 def main():
     clean_data = wrangler()
 
+    # geocoding is turned off in function
+    geocoded_data = latlong_geocoder()
 
 def wrangler():
     data_path = get_path() + '/data/raw_oncampuscrime131415.csv'
@@ -30,6 +32,11 @@ def wrangler():
     # needed for Google geocoder
     crime_df["geo_address"] = crime_df["Address"] + " " + crime_df["City"] + ", " + crime_df["State"]
 
+    return crime_df
+
+
+def geocoder(df):
+    crime_df = df
     ###-----------------------------------
     ### Send addresses to Google Geocoder
     ###-----------------------------------
@@ -50,6 +57,8 @@ def wrangler():
 
         # print out final data for examination
         split_df.to_csv('/home/dan/Desktop/portfolio/College_Crime_Map/colleges_lat_long_program.csv',sep=',')
+
+        return split_df
 
 
 def get_lat_lng(address):

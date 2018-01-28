@@ -8,7 +8,6 @@ def standardize_crime_rates(df, crime_list):
         standardized_rate_col = 'standardized_%s_rate' % crime
         stand_df[standardized_rate_col] = df.apply(standardize_crime_per_thousand, args=(crime,), axis=1)
 
-
     renamed_df = rename_columns(stand_df)
 
     return renamed_df
@@ -52,12 +51,13 @@ def make_hover_text(row, crime):
     if crime == 'AGG_A15':
         std_crime_rate = "Assault"
 
-    # rape hover text
+    # create hover text string
     hover_text = row['INSTNM'] + '<br>' +\
-                 str.title(row['City']) + ', ' + row['State'] + '<br>'\
-                'Count: ' + str(row[crime]) + '<br>' +\
-                'Rate per 1000 students: ' + str(row[std_crime_rate]) + '<br>' +\
-                'Enrollment: ' + str(row['Total'])
+                 str.title(row['City']) + '<br>' +\
+                 str(row['State']) + '<br>' +\
+                 'Count: ' + str(row[crime]) + '<br>' +\
+                 'Rate per 1000 students: ' + str(row[std_crime_rate]) + '<br>' +\
+                 'Enrollment: ' + str(row['Total'])
 
     return hover_text
 
