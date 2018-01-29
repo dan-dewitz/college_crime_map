@@ -11,6 +11,7 @@ def main():
     # geocoding is turned off in function
     geocoded_data = latlong_geocoder()
 
+
 def wrangler():
     data_path = get_path() + '/data/raw_oncampuscrime131415.csv'
     crime_df_raw = pd.read_csv(data_path)
@@ -67,7 +68,6 @@ def get_lat_lng(address):
     requst lat long from google geocoder client
     returns lat long as tuple
     '''
-
     print "Getting lat long .... "
     print address
 

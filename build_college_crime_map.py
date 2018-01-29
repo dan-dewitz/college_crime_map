@@ -40,7 +40,10 @@ def make_usa_crime_mape(df):
 
     # grouping category
     limits = crime_list
-    colors = ["rgb(116,97,26)","rgb(233,194,125)","rgb(128,205,193)","rgb(1,133,113)"]
+    # colors = ["rgb(116,97,26)","rgb(233,194,125)","rgb(128,205,193)","rgb(1,133,113)"]
+    # colors = ["rgb(27,158,119)","rgb(217,95,2)","rgb(117,112,179)","rgb(231,41,138)"]
+    # colors = ["rgb(31,120,180)","rgb(166,206,227)","rgb(178,223,138)","rgb(51,160,44)"]
+    colors = ["rgb(116,97,26)","rgb(233,194,125)","rgb(166,206,227)","rgb(31,120,180)"]
 
     for i in range(len(limits)):
 
@@ -59,7 +62,7 @@ def make_usa_crime_mape(df):
             hover_text = 'ROBBE15_hover_text'
             opacity_attr = 0.6
 
-        if lim == 'Aggravated Assault':
+        if lim == 'Assault':
             hover_text = 'AGG_A15_hover_text'
             opacity_attr = 0.6
 
