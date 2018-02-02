@@ -14,7 +14,7 @@ def standardize_crime_rates(df, crime_list):
 
 
 def standardize_crime_per_thousand(row, crime):
-    standardized__rate = (row[crime] / row['Total']) * 1000
+    standardized__rate = round((row[crime] / row['Total']) * 1000, 1)
 
     return standardized__rate
 
@@ -52,23 +52,15 @@ def make_hover_text(row, crime):
         std_crime_rate = "Assault"
 
     # create hover text string
-    hover_text = row['INSTNM'] + '<br>' +\
-                 str.title(row['City']) + '<br>' +\
-                 str(row['State']) + '<br>' +\
-                 'Count: ' + str(row[crime]) + '<br>' +\
-                 'Rate per 1000 students: ' + str(row[std_crime_rate]) + '<br>' +\
-                 'Enrollment: ' + str(row['Total'])
+    if row['Total'] > 0:
+        hover_text = row['INSTNM'] + '<br>' +\
+                     str.title(row['City']) + '<br>' +\
+                     str(row['State']) + '<br>' +\
+                     'Count: ' + str(row[crime]) + '<br>' +\
+                     'Rate per 1000 students: ' + str(row[std_crime_rate]) + '<br>' +\
+                     'Enrollment: ' + str(int(row['Total']))
 
-    return hover_text
-
-
-
-
-
-
-
-
-
+        return hover_text
 
 
 if __name__ == "__main__":
