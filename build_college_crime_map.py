@@ -68,6 +68,7 @@ def make_usa_crime_mape(df):
 
         # subset df where school equals sector cd
         df_sub = df[['INSTNM', 'lat', 'long', lim, hover_text]]
+        df_sub = df_sub[df_sub[lim] > 0]
         df_sub.to_csv('/home/dan/Desktop/portfolio/College_Crime_Map/hover_text_TEST.csv')
 
 
