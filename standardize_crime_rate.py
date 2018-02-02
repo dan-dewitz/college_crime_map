@@ -37,6 +37,7 @@ def get_hover_text(df, crime_list):
 
     return mod_df
 
+
 def make_hover_text(row, crime):
 
     if crime == 'RAPE15':
