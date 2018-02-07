@@ -5,11 +5,11 @@ import pandas as pd
 import geocoder
 
 
-def main():
+def preprocess():
     clean_data = wrangler()
 
     # geocoding is turned off in function
-    geocoded_data = latlong_geocoder()
+    geocoded_data = geocoder(clean_data)
 
 
 def wrangler():
@@ -106,4 +106,4 @@ def check_add_for_nan(address):
 
 
 if __name__ == "__main__":
-    main()
+    preprocess()
