@@ -24,7 +24,6 @@ def main():
     crime_list = ['RAPE15', 'FONDL15', 'ROBBE15', 'AGG_A15']
 
     standardized__df = standardize_crime_rates(crime_df, crime_list)
-
     final_data = get_hover_text(standardized__df, crime_list)
 
     make_usa_crime_mape(final_data)
@@ -68,9 +67,10 @@ def make_usa_crime_mape(df):
 
         # subset df where school equals sector cd
         df_sub = df[['INSTNM', 'lat', 'long', lim, hover_text]]
+        # do not show school if crime has not occured
         df_sub = df_sub[df_sub[lim] > 0]
+        # print for QA
         df_sub.to_csv('/home/dan/Desktop/portfolio/College_Crime_Map/hover_text_TEST.csv')
-
 
         # get code definition
         type_of_crime = limits[i]
@@ -91,7 +91,10 @@ def make_usa_crime_mape(df):
                 sizemode = 'area'
                 ),
             )
+
+        # appended trace to list of traces
         crime_traces.append(crime)
+
 
     layout = dict(
         title = '<b>On Campus College Crime in 2015</b><br>bubbles display standardized crime rate per 1,000 students<br>(click legend to toggle crimes)<br>',
@@ -108,8 +111,8 @@ def make_usa_crime_mape(df):
         ),
     )
 
-    fig = dict( data=crime_traces, layout=layout )
 
+    fig = dict( data=crime_traces, layout=layout )
     offline.plot(fig, filename='map_crimeLegend.html')
     # tls.get_embed('https://plot.ly/~ddewitz/69')
 
