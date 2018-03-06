@@ -87,11 +87,21 @@ def make_college_crime_map(df, local=False, online=False):
     # different, so that's the reason for this if statement
     if online:
         layout = dict(
+            autosize = True,
+            # margin=go.Margin(
+            #     l=50,
+            #     r=50,
+            #     b=100,
+            #     t=100,
+            #     pad=4
+            # ),
             showlegend = True,
             legend = dict(
                 traceorder='normal',
                 orientation="h",
-                x=0,
+                # xanchor="left",
+                # yanchor="top",
+                # x=0,
                 y=1.06,
                 font = dict(
                     size=25
@@ -106,19 +116,30 @@ def make_college_crime_map(df, local=False, online=False):
                 countrywidth=1,
                 subunitcolor="rgb(255, 255, 255)",
                 countrycolor="rgb(255, 255, 255)"
-            ),
-            annotations=[
-                dict(
-                      x=0.008,
-                      y=0.99,
-                      text="click legend to toggle crimes ~ scroll to zoom",
-                      showarrow=False,
-                      font = dict(
-                          family="Arial",
-                          color="rgb(105,105,105)"
-                      )
-                )
-            ]
+            )
+            # ,
+            # annotations=[
+            #     dict(
+            #         #   x=0.008,
+            #         #   y=0.99,
+            #         #   text="click legend to toggle crimes ~ scroll to zoom",
+            #         #   showarrow=False,
+            #         x=0.008,
+            #         y=0.99,
+            #         align="right",
+            #         valign="top",
+            #         text='Legend Title',
+            #         showarrow=False,
+            #         xref="paper",
+            #         yref="paper",
+            #         xanchor="middle",
+            #         yanchor="top",
+            #         font = dict(
+            #             family="Arial",
+            #             color="rgb(105,105,105)"
+            #         )
+            #     )
+            # ]
         )
 
         # create plotly figure
