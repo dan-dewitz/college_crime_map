@@ -38,10 +38,10 @@ def opposite_subset(df_total, df_keep):
 
     print df_total.shape
 
-    opp_df = df_total[(df_total.RAPE15 == 0)
-                    & (df_total.FONDL15 == 0)
-                    & (df_total.ROBBE15 == 0)
-                    & (df_total.AGG_A15 == 0)]
+    opp_df = df_total[(df_total.RAPE16 == 0)
+                    & (df_total.FONDL16 == 0)
+                    & (df_total.ROBBE16 == 0)
+                    & (df_total.AGG_A16 == 0)]
 
     opp_df_count = opp_df.shape
 

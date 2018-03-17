@@ -8,7 +8,8 @@ import plotly.plotly as py
 import plotly.graph_objs as go
 import plotly.offline as offline
 import plotly.tools as tls
-#custom module
+# custom module
+sys.path.append("tools")
 import preprocess
 
 # set online credentials for plotly
@@ -23,20 +24,22 @@ def main():
     make_college_crime_map(crime_df, online=True)
 
 
-def make_college_crime_map(df, local=False, online=False):
+def make_college_crime_map(df, local=True, online=False):
     '''
     create plotly bubble map
     -- if local == True: write to local html
     -- if online == True: write to Plotly portfolio
     '''
     # these are the crimes I'm mapping
-    crime_list = ['Assault', 'Robbery', 'Fondling', 'Rape']
+    # crime_list = ['Assault', 'Robbery', 'Fondling', 'Rape']
+    crime_list = ['Robbery', 'Fondling', 'Assault', 'Rape']
     # will append each crime, or trace, to this list
     crime_traces = []
     # grouping category
     limits = crime_list
     # set colors for crime ledgend - indexed in for loop
-    colors = ["rgb(31,120,180)","rgb(166,206,227)","rgb(233,194,125)","rgb(116,97,26)"]
+    # colors = ["rgb(31,120,180)","rgb(166,206,227)","rgb(233,194,125)","rgb(116,97,26)"]
+    colors = ["rgb(166,206,227)","rgb(233,194,125)","rgb(31,120,180)","rgb(116,97,26)"]
 
     for i in range(len(limits)):
         # get crime
@@ -44,19 +47,19 @@ def make_college_crime_map(df, local=False, online=False):
 
         # set crime specific settings
         if lim == 'Rape':
-            hover_text = 'RAPE15_hover_text'
+            hover_text = 'RAPE16_hover_text'
             opacity_attr = 1
 
         if lim == 'Fondling':
-            hover_text = 'FONDL15_hover_text'
+            hover_text = 'FONDL16_hover_text'
             opacity_attr = 0.9
 
         if lim == 'Robbery':
-            hover_text = 'ROBBE15_hover_text'
+            hover_text = 'ROBBE16_hover_text'
             opacity_attr = 0.6
 
         if lim == 'Assault':
-            hover_text = 'AGG_A15_hover_text'
+            hover_text = 'AGG_A16_hover_text'
             opacity_attr = 0.6
 
         # subset df where school equals sector cd
@@ -88,13 +91,6 @@ def make_college_crime_map(df, local=False, online=False):
     if online:
         layout = dict(
             autosize = True,
-            # margin=go.Margin(
-            #     l=50,
-            #     r=50,
-            #     b=100,
-            #     t=100,
-            #     pad=4
-            # ),
             showlegend = True,
             legend = dict(
                 traceorder='normal',
@@ -117,29 +113,6 @@ def make_college_crime_map(df, local=False, online=False):
                 subunitcolor="rgb(255, 255, 255)",
                 countrycolor="rgb(255, 255, 255)"
             )
-            # ,
-            # annotations=[
-            #     dict(
-            #         #   x=0.008,
-            #         #   y=0.99,
-            #         #   text="click legend to toggle crimes ~ scroll to zoom",
-            #         #   showarrow=False,
-            #         x=0.008,
-            #         y=0.99,
-            #         align="right",
-            #         valign="top",
-            #         text='Legend Title',
-            #         showarrow=False,
-            #         xref="paper",
-            #         yref="paper",
-            #         xanchor="middle",
-            #         yanchor="top",
-            #         font = dict(
-            #             family="Arial",
-            #             color="rgb(105,105,105)"
-            #         )
-            #     )
-            # ]
         )
 
         # create plotly figure
