@@ -14,10 +14,10 @@ import unit_tests
 
 def preprocess(geocode=False, standardizer=False, clean=False):
     '''
-    All data wrangling steps prior to building the map are included
-    in this function.
+    All data wrangling steps prior to building the map.
+
     -- if clean == True: load pre-cleaned dataset
-    -- standardizer == True: create new standardized crime rate or change hover text
+    -- if standardizer == True: create new standardized crime rate or change hover text
     -- if geocode == True: geocode the data and create a new data set
 
     return:
@@ -37,13 +37,15 @@ def preprocess(geocode=False, standardizer=False, clean=False):
     raw_file = 'oncampuscrime141516.csv'
     to_standardize_file = 'to_standardize_data.csv'
     clean_file = 'final_geocoded_data.csv'
-    folder = '/data/'
+
+    in_folder = '/data/'
+    out_folder = '/output/'
 
     if geocode:
         ### read raw data into memory
         # locate the path of execution and find the
         # data in the data folder
-        data_path = get_path() + folder + raw_file
+        data_path = get_path() + in_folder + raw_file
         crime_df_raw = pd.read_csv(data_path, index_col=None)
 
         # UNIT TEST - check for dropped rows
@@ -60,6 +62,8 @@ def preprocess(geocode=False, standardizer=False, clean=False):
                                             'FONDL16', 'ROBBE16', 'AGG_A16')]
 
         # make complete address -- housekeeping for Google geocoder
+        # slim_crime_df["INSTNM"] \
+        #  + ", " \
         slim_crime_df["geo_address"] = slim_crime_df["INSTNM"] \
                                      + ", " \
                                      + slim_crime_df["Address"] \
@@ -67,7 +71,7 @@ def preprocess(geocode=False, standardizer=False, clean=False):
                                      + slim_crime_df["City"] \
                                      + ", " \
                                      + slim_crime_df["State"] \
-                                     + " " \
+                                     + ", " \
                                      + slim_crime_df["ZIP"]
 
         # UNIT TEST - check for dropped rows
@@ -88,6 +92,18 @@ def preprocess(geocode=False, standardizer=False, clean=False):
                                      | (slim_crime_df.ROBBE16 > 0)
                                      | (slim_crime_df.AGG_A16 > 0)]
 
+        # remove schools that don't have city, state, or zip
+        # I can't trust data from a school that doesn't even know
+        # their own address
+        crime_df_small = crime_df_small.fillna('')
+
+        missing_vals_index = ((crime_df_small["City"] == '')
+                            | (crime_df_small["State"] == '')
+                            | (crime_df_small["ZIP"] == ''))
+
+        # now remove bad schools from my actual dataset
+        crime_df_small = crime_df_small[missing_vals_index]
+
         # UNIT TEST - check for poor logic and nulls
         # My exclusion set, plus my inclusion set, should equal the total
         # set prior to subsetting. Exclusion set: All crimes of interest == 0
@@ -98,11 +114,11 @@ def preprocess(geocode=False, standardizer=False, clean=False):
         # switch to True if you actually want to geocode stuff
         # unit test included in custom_geocoder
         # 'uncoded' addresses printed to data folder
-        geo_crime_df = custom_geocode.custom_geocoder(crime_df_small, "geo_address")
+        geo_crime_df = custom_geocode.custom_geocoder(crime_df_small.head(n=10), "geo_address")
 
         # write for stardardize option
         out_name = 'to_standardize_data.csv'
-        out_path = get_path() + folder + out_name
+        out_path = get_path() + out_folder + out_name
         geo_crime_df.to_csv(out_path, sep=',')
 
         # standardize all crime rates for every crime and school
@@ -128,7 +144,7 @@ def preprocess(geocode=False, standardizer=False, clean=False):
 
         # write for QA
         out_name = 'final_geocoded_data.csv'
-        out_path = get_path() + folder + out_name
+        out_path = get_path() + out_folder + out_name
         final_df.to_csv(out_path, sep=',')
 
         return final_df
@@ -136,7 +152,7 @@ def preprocess(geocode=False, standardizer=False, clean=False):
     if standardizer:
         # if you want to adjust how crime rates are calculated
         # but not re-geocode all the data
-        data_path = get_path() + folder + to_standardize_file
+        data_path = get_path() + in_folder + to_standardize_file
         crime_df_clean = pd.read_csv(data_path, index_col=None)
         unit_tests.ut_row_count(test_df=crime_df_clean, target=1929)
 
@@ -160,7 +176,7 @@ def preprocess(geocode=False, standardizer=False, clean=False):
 
         # write to csv for QA
         out_name = 'final_standardized_data.csv'
-        out_path = get_path() + folder + out_name
+        out_path = get_path() + out_folder + out_name
         final_df.to_csv(out_path, sep=',')
 
         return final_df
@@ -168,7 +184,7 @@ def preprocess(geocode=False, standardizer=False, clean=False):
     if clean:
         # if you just want to load the final data set from csv
         # find and return the clean data set located in the data folder
-        data_path = get_path() + folder + clean_file
+        data_path = get_path() + in_folder + clean_file
 
         # read csv into memory and check for dropped rows
         crime_df_clean = pd.read_csv(data_path, index_col=None)
@@ -246,5 +262,26 @@ def make_hover_text(row, crime):
         return hover_text
 
 
+def geo_code_bad_addresses():
+
+    # write for stardardize option
+    in_name = 'bad_addresses_uni_only_trail.csv'
+    folder = '/data/'
+    in_path = get_path() + in_folder + in_name
+    to_geo_code = pd.read_csv(in_path, index_col=None)
+
+    to_geo_code["geo_address"] = to_geo_code["INSTNM"] \
+                                 + ", " \
+                                 + to_geo_code["City"] \
+                                 + ", " \
+                                 + to_geo_code["State"]
+
+
+    geo_crime_df = custom_geocode.custom_geocoder(to_geo_code.head(n=20), "geo_address")
+
+    return geo_crime_df
+
+
 if __name__ == "__main__":
-    preprocess(clean=True)
+    preprocess(geocode=True)
+    # geo_code_bad_addresses()

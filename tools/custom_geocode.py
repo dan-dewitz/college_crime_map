@@ -12,9 +12,11 @@ def custom_geocoder(df, column_name):
     function takes a df, subsets the df on the address column
     loops through each value in the column, sending the address to
     the Google geocoding client.
-    -- the client returns a tuple
-    -- tuple is parsed into two seperate columns
-    -- full df is returned with additional lat long columns
+
+    return:
+        -- the client returns a tuple
+        -- tuple is parsed into two seperate columns
+        -- full df is returned with additional lat long columns
     '''
     crime_df = df
 
@@ -27,15 +29,15 @@ def custom_geocoder(df, column_name):
     crime_df = crime_df.fillna('')
     bad_addresses = crime_df[crime_df.lat_lng == '']
     # write for QA
-    out_name = 'bad_addresses.csv'
-    folder = '/data/'
+    out_name = 'bad_addresses_school_only.csv'
+    folder = '/output/'
     out_path = get_path() + folder + out_name
     bad_addresses.to_csv(out_path, sep=',')
 
     ### only keep addresses that pass the geocoder
     clean_crime_df = crime_df[crime_df.lat_lng != '']
-    out_name = 'good_addresses.csv'
-    folder = '/data/'
+    out_name = 'good_addresses_school_only.csv'
+    folder = '/output/'
     out_path = get_path() + folder + out_name
     bad_addresses.to_csv(out_path, sep=',')
 

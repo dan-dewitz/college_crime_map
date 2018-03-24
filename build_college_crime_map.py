@@ -21,69 +21,68 @@ def main():
     # load cleaned data set
     crime_df = preprocess.preprocess(clean=True)
     # make the map - save html to local machine
-    make_college_crime_map(crime_df, online=True)
+    make_college_crime_map(crime_df, online=True, local=True)
 
 
-def make_college_crime_map(df, local=True, online=False):
+def make_college_crime_map(df, local=False, online=False):
     '''
     create plotly bubble map
     -- if local == True: write to local html
     -- if online == True: write to Plotly portfolio
+
+    Local and Online maps also have slightly different designs
     '''
     # these are the crimes I'm mapping
-    # crime_list = ['Assault', 'Robbery', 'Fondling', 'Rape']
     crime_list = ['Robbery', 'Fondling', 'Assault', 'Rape']
-    # will append each crime, or trace, to this list
+
+    # will append each crime category, or trace, to this list
     crime_traces = []
-    # grouping category
-    limits = crime_list
+
     # set colors for crime ledgend - indexed in for loop
-    # colors = ["rgb(31,120,180)","rgb(166,206,227)","rgb(233,194,125)","rgb(116,97,26)"]
     colors = ["rgb(166,206,227)","rgb(233,194,125)","rgb(31,120,180)","rgb(116,97,26)"]
 
-    for i in range(len(limits)):
-        # get crime
-        lim = limits[i]
+    for i, crime in enumerate(crime_list):
 
-        # set crime specific settings
-        if lim == 'Rape':
+        # set crime specific attributes
+        if crime == 'Rape':
             hover_text = 'RAPE16_hover_text'
             opacity_attr = 1
 
-        if lim == 'Fondling':
+        if crime == 'Fondling':
             hover_text = 'FONDL16_hover_text'
             opacity_attr = 0.9
 
-        if lim == 'Robbery':
+        if crime == 'Robbery':
             hover_text = 'ROBBE16_hover_text'
             opacity_attr = 0.6
 
-        if lim == 'Assault':
+        if crime == 'Assault':
             hover_text = 'AGG_A16_hover_text'
             opacity_attr = 0.6
 
         # subset df where school equals sector cd
-        df_sub = df[['INSTNM', 'lat', 'long', lim, hover_text]]
-        # do not show school if a crime has not occured on its campus
-        df_sub = df_sub[df_sub[lim] > 0]
+        df_sub = df[['INSTNM', 'lat', 'long', crime, hover_text]]
 
-        crime = dict(
+        # do not show school if a crime has not occured on its campus
+        df_sub = df_sub[df_sub[crime] > 0]
+
+        crime_bubbles = dict(
             type = 'scattergeo',
             locationmode = 'USA-states',
             lon = df_sub["long"],
             lat = df_sub["lat"],
             text = df_sub[hover_text],
             opacity = opacity_attr,
-            name = lim,
+            name = crime,
             marker = dict(
-                size = df_sub[lim] * 20,
+                size = df_sub[crime] * 20,
                 color = colors[i],
                 line = dict(width=0.5, color='rgb(40,40,40)'),
                 sizemode = 'area'
                 ),
             )
         # appended trace to list of traces
-        crime_traces.append(crime)
+        crime_traces.append(crime_bubbles)
 
     # the legend and annotations between the local
     # html and the more sharable plotly iframe are pretty

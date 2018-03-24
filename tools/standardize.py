@@ -9,6 +9,9 @@ def standardize_crime_rates(df, crime_list):
     acutual calculation happens in standardize_crime_per_thousand()
     this function applies the function that standardizes the crime
     rates to every row in the df
+
+    return:
+        -- df with new standardized column
     '''
     stand_df = df
 
@@ -23,6 +26,9 @@ def standardize_crime_per_thousand(row, crime):
     '''
     calculate the crime rate per 1,000 students
     crime rate is rounded to two decimal points
+
+    return:
+        -- single float rate
     '''
     standardized__rate = round((row[crime] / row['Total']) * 1000, 1)
 
