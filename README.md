@@ -22,3 +22,9 @@ Bubble map is built using Python and Plotly.
 * standardize.py: my function to standardize the crime rates
 * unit_tests.py: all unit tests, mostly checking for dropped or missing rows during data wrangling
 * geocode_tricky_addresses: hacking to get all schools to pass the Google geocoder
+
+## Data
+Data are made publically available through the Clearly Act
+and can be downloaded from the the Department of Education's website.
+They have a couple different ways of downloading data -- this is the tool I used:
+https://ope.ed.gov/campussafety/#/datafile/list
