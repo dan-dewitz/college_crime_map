@@ -25,12 +25,15 @@ def main():
 
 
 def make_college_crime_map(df, local=False, online=False):
-    '''
-    create plotly bubble map
-    -- if local == True: write to local html
-    -- if online == True: write to Plotly portfolio
+    '''create plotly bubble map
 
-    Local and Online maps also have slightly different designs
+    Args:
+        df: clean dataset ready to map
+        local: True, write to local html
+        online: True, write to Plotly portfolio
+
+    Local and Online maps also have slightly different designs,
+    which is the reason for a special arg
     '''
     # these are the crimes I'm mapping
     crime_list = ['Robbery', 'Fondling', 'Assault', 'Rape']

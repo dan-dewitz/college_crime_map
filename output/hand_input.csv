@@ -1,0 +1,9 @@
+INSTNM,BRANCH,Address,City,State,ZIP,sector_cd,Sector_desc,men_total,women_total,Total,RAPE16,FONDL16,ROBBE16,AGG_A16,geo_address,lat_lng,lat,long
+University of Arkansas at Pine Bluff,UAPB - University of Arkansas at Pine Bluff,1200 N UNIVERSITY MAIL SLOT 4967,PINE BLUFF,AR,716014967,1,"Public, 4-year or above",1172,1649,2821,0,1,1,0,"University of Arkansas at Pine Bluff, PINE BLUFF, AR",' ’,34.246872,-92.021339
+California Institute of Technology,Main Campus,"1200 E CALIFORNIA BLVD, MC 200-63",PASADENA,CA,91125,2,"Private nonprofit, 4-year or above",1479,761,2240,11,2,2,5,"California Institute of Technology, PASADENA, CA",' ’,34.137658,-118.125269
+University of California-San Diego,Main Campus,9500 Gilman Dr Mail Code 0005,La Jolla,CA,920930005,1,"Public, 4-year or above",18807,16172,34979,10,6,3,8,"University of California-San Diego, La Jolla, CA",' ’,32.88006,-117.234014
+Missouri University of Science and Technology,Missouri S&T,"300 W. 13th Street, 206 Parker Hall",ROLLA,MO,654091060,1,"Public, 4-year or above",6829,2006,8835,4,2,0,2,"Missouri University of Science and Technology, ROLLA, MO",' ’,37.952823,-91.773819
+South Dakota State University,Main Campus,"Box 2201, ADM 324",Brookings,SD,570071998,1,"Public, 4-year or above",5904,6696,12600,7,4,0,1,"South Dakota State University, Brookings, SD",' ’,44.318946,-96.783968
+Alverno College,Alverno College,3400 S 43RD  ST,Milwaukee,WI,532343922,2,"Private nonprofit, 4-year or above",57,1960,2017,0,0,0,2,"Alverno College, Milwaukee, WI",' ’,42.983525,-87.963617
+Everest College-Chesapeake,Altierus Career College Chesapeake,825 Greenbrier Circle #100,Chesapeake,VA,233202639,5,"Private nonprofit, 2-year",78,147,225,0,0,0,1,"Everest College-Chesapeake, Chesapeake, VA",' ’,36.789614,-76.230193
+Augusta University,AU Summerville Campus - Augusta,2500 WALTON WAY,AUGUSTA,GA,309042200,1,"Public, 4-year or above",2907,5031,7938,1,0,1,0,"Augusta University, AUGUSTA, GA",' ’,33.470858,-81.987592

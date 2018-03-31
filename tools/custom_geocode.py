@@ -7,42 +7,55 @@ import geocoder
 # custom module
 import unit_tests
 
-def custom_geocoder(df, column_name):
-    '''
-    function takes a df, subsets the df on the address column
-    loops through each value in the column, sending the address to
-    the Google geocoding client.
+def custom_geocoder(df, column_name, write=False):
+    '''get lat long coordinates from school street address
+
+    Args:
+        df: a dataframe
+        column_name (str): addresses to geocode
+        write (bol): True, write out csv to examine
+                     addresses that failed the geocoder
 
     return:
-        -- the client returns a tuple
-        -- tuple is parsed into two seperate columns
-        -- full df is returned with additional lat long columns
+        input df with additional columns for lat and long
+
+    Google client returns lat/long tuple, tuple is parsed into
+    two seperate columns -- input df, with all columns,
+    is returned with additional lat long columns.
     '''
     crime_df = df
 
-    ### Send address to Google Geocoing client
+    # ----------------------------------------
+    # Send address to Google Geocoing client
+    # ----------------------------------------
     # applying get_lat_lng function, which calls the Google geocoder,
     # to every value in the address column
     crime_df["lat_lng"] = crime_df[column_name].apply(get_lat_lng)
 
-    ### print out addresses that fail the geocoder for examination
-    crime_df = crime_df.fillna('')
-    bad_addresses = crime_df[crime_df.lat_lng == '']
-    # write for QA
-    out_name = 'bad_addresses_school_only.csv'
-    folder = '/output/'
-    out_path = get_path() + folder + out_name
-    bad_addresses.to_csv(out_path, sep=',')
+    if write:
+        ### print out addresses that fail the geocoder for examination
+        crime_df = crime_df.fillna('')
+        bad_addresses = crime_df[crime_df.lat_lng == '']
+
+        # write for QA
+        out_name = 'interation1_very_very_bad_addresses.csv'
+        folder = '/output/'
+        out_path = get_path() + folder + out_name
+        bad_addresses.to_csv(out_path, sep=',')
 
     ### only keep addresses that pass the geocoder
     clean_crime_df = crime_df[crime_df.lat_lng != '']
-    out_name = 'good_addresses_school_only.csv'
-    folder = '/output/'
-    out_path = get_path() + folder + out_name
-    bad_addresses.to_csv(out_path, sep=',')
+    # out_name = 'very_good_addresses.csv'
+    # folder = '/output/'
+    # out_path = get_path() + folder + out_name
+    # clean_crime_df.to_csv(out_path, sep=',')
 
+    # ------
+    # need this, but fuck this
+    # ------
     # total address that entered geocoder = addresses that pass + addresses that fail
-    unit_tests.exclusion_test(df_test=crime_df, df_inclusion=clean_crime_df, df_exclusion=bad_addresses)
+    unit_tests.exclusion_test(df_test=crime_df, df_inclusion=clean_crime_df,
+                                                             df_exclusion=bad_addresses)
 
     ### split lat long tuple returned from the Google geocoder
     # into seperate columns in the df
@@ -70,6 +83,20 @@ def get_lat_lng(address):
 
     # request lat long from google client
     g = geocoder.google(address)
+
+    if g.latlng is None:
+        print("FUCK!!")
+        print(g)
+
+    if g.latlng is not None:
+        print("good g")
+        print(len(g.latlng))
+
+        if len(g.latlng) > 2:
+            print(len(g.latlng))
+            print(g.latlng)
+            print("What the heck!!!!")
+
     lat_lng = g.latlng
 
     return lat_lng
@@ -97,4 +124,4 @@ def get_path():
 
 
 if __name__ == "__main__":
-    custom_geocode()
+    print("module not intended to be target of execution")
