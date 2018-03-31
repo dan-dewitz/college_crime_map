@@ -17,6 +17,7 @@ def standardize_crime_rates(df, crime_list):
 
     for crime in crime_list:
         standardized_rate_col = 'standardized_%s_rate' % crime
+
         stand_df[standardized_rate_col] = df.apply(standardize_crime_per_thousand, args=(crime,), axis=1)
 
     return stand_df
@@ -30,7 +31,15 @@ def standardize_crime_per_thousand(row, crime):
     return:
         -- single float rate
     '''
+
+    print(row['INSTNM'])    
+    print(row[crime])
+    print(row['Total'])
+
+
     standardized__rate = round((row[crime] / row['Total']) * 1000, 1)
+
+    print(standardized__rate)
 
     return standardized__rate
 

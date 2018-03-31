@@ -41,7 +41,10 @@ def opposite_subset(df_total, df_keep):
     opp_df = df_total[(df_total.RAPE16 == 0)
                     & (df_total.FONDL16 == 0)
                     & (df_total.ROBBE16 == 0)
-                    & (df_total.AGG_A16 == 0)]
+                    & (df_total.AGG_A16 == 0)
+                    | (df_total.City == '')
+                    | (df_total.State == '')
+                    | (df_total.ZIP == '')]
 
     opp_df_count = opp_df.shape
 

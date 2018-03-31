@@ -20,6 +20,7 @@ plotly.tools.set_credentials_file(username='ddewitz',
 def main():
     # load cleaned data set
     crime_df = preprocess.preprocess(clean=True)
+
     # make the map - save html to local machine
     make_college_crime_map(crime_df, online=True, local=True)
 

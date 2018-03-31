@@ -32,11 +32,11 @@ def custom_geocoder(df, column_name, write=False):
     # to every value in the address column
     crime_df["lat_lng"] = crime_df[column_name].apply(get_lat_lng)
 
-    if write:
-        ### print out addresses that fail the geocoder for examination
-        crime_df = crime_df.fillna('')
-        bad_addresses = crime_df[crime_df.lat_lng == '']
+    ### print out addresses that fail the geocoder for examination
+    crime_df = crime_df.fillna('')
+    bad_addresses = crime_df[crime_df.lat_lng == '']
 
+    if write:
         # write for QA
         out_name = 'interation1_very_very_bad_addresses.csv'
         folder = '/output/'
@@ -45,17 +45,11 @@ def custom_geocoder(df, column_name, write=False):
 
     ### only keep addresses that pass the geocoder
     clean_crime_df = crime_df[crime_df.lat_lng != '']
-    # out_name = 'very_good_addresses.csv'
-    # folder = '/output/'
-    # out_path = get_path() + folder + out_name
-    # clean_crime_df.to_csv(out_path, sep=',')
 
-    # ------
-    # need this, but fuck this
-    # ------
     # total address that entered geocoder = addresses that pass + addresses that fail
-    unit_tests.exclusion_test(df_test=crime_df, df_inclusion=clean_crime_df,
-                                                             df_exclusion=bad_addresses)
+    unit_tests.exclusion_test(df_test=crime_df,
+                              df_inclusion=clean_crime_df,
+                              df_exclusion=bad_addresses)
 
     ### split lat long tuple returned from the Google geocoder
     # into seperate columns in the df
@@ -68,11 +62,18 @@ def custom_geocoder(df, column_name, write=False):
 
 
 def get_lat_lng(address):
-    '''
-    function takes an address as a string
-    requests lat long from google geocoding client
-    returns lat long as tuple
-    nulls are returned as a blank string
+    ''' get lat long from Google geocoder
+
+    args:
+        address (str): single string address
+
+    return:
+        lat long tuple or blank string if fail
+
+    Function takes an address as a string,
+    requests lat long from google geocoding client,
+    returns lat long as tuple,
+    nulls are returned as a blank string.
     '''
     print "Getting lat long for .... "
     print address
@@ -85,7 +86,7 @@ def get_lat_lng(address):
     g = geocoder.google(address)
 
     if g.latlng is None:
-        print("FUCK!!")
+        print("NOOO!!!")
         print(g)
 
     if g.latlng is not None:
