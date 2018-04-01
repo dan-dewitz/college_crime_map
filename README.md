@@ -1,7 +1,7 @@
 # College Crime Map
 
 <b>View live project here:</b>
-https://github.com/mustard-tshirt/college_crime_map.github.io
+https://mustard-tshirt.github.io/college_crime_map.github.io/
 
 Code wrangles data from raw extract from the department of education's website.
 This dataset did not provide the lat and long coordinates for each school.
