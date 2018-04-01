@@ -28,3 +28,6 @@ Data are made publically available through the Clearly Act
 and can be downloaded from the the Department of Education's website.
 They have a couple different ways of downloading data -- this is the tool I used:
 https://ope.ed.gov/campussafety/#/datafile/list
+
+* oncampuscrime141516.csv: raw data file
+* final_geocoded_data.csv: clean dataset ready to map
